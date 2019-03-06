@@ -1,10 +1,12 @@
-﻿//#include <Windows.h>
-//#include <gl/GL.h>    // OpenGL
-//#include <gl/GLU.h>   // OpenGL Utility Library
-//#include <GL/glut.h>  // OpenGL Utility Toolkit
+﻿#include <Windows.h>
+#include <gl/GL.h>    // OpenGL
+#include <gl/GLU.h>   // OpenGL Utility Library
+#include <GL/glut.h>  // OpenGL Utility Toolkit
 
 #include <GL/freeglut.h>  // Free OpenGL Utility Toolkit for creating windows, initializing OpenGL contexts, and handling input events
 #include <glm.hpp>  // OpenGL Mathematics. A C++ mathematics library for graphics programming 
+#include <GL/freeglut_ext.h>
+#include <GL/freeglut_std.h>
 
 #include "Viewport.h"
 #include "Camera.h"
