@@ -23,6 +23,9 @@ public:
     void render(Camera const& cam);
 	void update();
 
+	void escena2D();
+	void escena3D();
+
 protected:
 
 	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
