@@ -127,10 +127,10 @@ void TrianguloAnimado::render(Camera const & cam) {
 }
 
 void TrianguloAnimado::update() {
-	glm::dmat4 m;
+	dmat4 m;
 
-	setModelMat(glm::dmat4(1));
-	m = rotate(getModelMat(), radians(angle+=1.0), dvec3(0, 0, 1));
+	setModelMat(dmat4(1));
+	m = rotate(getModelMat(), radians(angle += 1.0), dvec3(0, 0, 1));
 	m = translate(m, dvec3(40, 40, 0));
 	m = rotate(m, radians(angle+=10.0), dvec3(0, 0, 1));
 	
@@ -141,6 +141,8 @@ void TrianguloAnimado::update() {
 
 Estrella3D::Estrella3D(GLdouble re, GLdouble np, GLdouble h) : Entity() {
 	mesh = Mesh::generaEstrella3D(re, np, h);
+	dmat4 m = translate(modelMat, dvec3(0, 20, 0));
+	setModelMat(m);
 }
 
 Estrella3D::~Estrella3D() {
@@ -151,13 +153,9 @@ void Estrella3D::render(Camera const & cam) {
 	if (mesh != nullptr) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glColor3d(1.0, 0.0, 1.0);
-
-
 		uploadMvM(cam.getViewMat());
 		mesh->render();
-
-		glm::dmat4 m = rotate(getModelMat(), radians(180.0), dvec3(1, 0, 0));
-		setModelMat(m);
+		modelMat = rotate(modelMat, radians(180.0), dvec3(1, 0, 0));
 		uploadMvM(cam.getViewMat());
 		mesh->render();
 		glLineWidth(2);
@@ -165,8 +163,8 @@ void Estrella3D::render(Camera const & cam) {
 }
 
 void Estrella3D::update() {
-	setModelMat(glm::dmat4(1));
-	glm::dmat4 m = translate(getModelMat(), dvec3(0, 20, 0));
+	setModelMat(dmat4(1));
+	dmat4 m = translate(getModelMat(), dvec3(0, 20, 0));
 	m = rotate(m, radians(angle+=5.0), dvec3(0, 1, 0));
 	m = rotate(m, radians(angle+=5.0), dvec3(0, 0, 1));
 	setModelMat(m);
@@ -197,7 +195,7 @@ void Caja::update() { }
 //-------------------------------------------------------------------------
 
 RectanguloTexCor::RectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) : Entity() {
-	mesh = Mesh::generaRectanguloTexCor(w, h);
+	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
 	texture.load("Images/baldosaC.bmp");
 }
 
@@ -306,8 +304,8 @@ void ParedTexCor::render(Camera const & cam) {
 
 //-------------------------------------------------------------------------
 
-Foto::Foto(GLdouble w, GLdouble h) {
-	mesh = Mesh::generaRectanguloTexCor(w, h);
+Foto::Foto(GLdouble w, GLdouble h, GLuint rw, GLuint rh) {
+	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
 }
 
 Foto::~Foto() {

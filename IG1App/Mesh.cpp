@@ -273,7 +273,7 @@ Mesh * Mesh::generaContCubo(GLdouble l) {
 
 //-------------------------------------------------------------------------
 
-Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h) {
+Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) {
 	Mesh* m = new Mesh();
 	m->primitive = GL_TRIANGLE_STRIP;
 	m->numVertices = 4;
@@ -286,9 +286,9 @@ Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h) {
 
 	m->textCoords = new dvec2[m->numVertices];
 	m->textCoords[0] = dvec2(0, 0);
-	m->textCoords[1] = dvec2(0, h / 10);
-	m->textCoords[2] = dvec2(w / 10, 0);
-	m->textCoords[3] = dvec2(w / 10, h / 10);
+	m->textCoords[1] = dvec2(0, rh);
+	m->textCoords[2] = dvec2(rw, 0);
+	m->textCoords[3] = dvec2(rw, rh);
 
 	return m;
 }

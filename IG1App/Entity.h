@@ -190,7 +190,7 @@ public:
 
 class Foto : public Entity {
 public:
-	Foto(GLdouble w, GLdouble h);
+	Foto(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	~Foto();
 
 	Texture texture;

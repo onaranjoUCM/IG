@@ -20,7 +20,7 @@ public:
 	static Mesh* generaTrianguloAnimado(GLdouble r);
 	static Mesh* generaEstrella3D(GLdouble re, GLdouble np, GLdouble h);
 	static Mesh* generaContCubo(GLdouble l);
-	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h);
+	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	static Mesh* generaEstrella3DTexCor(GLdouble re, GLdouble np, GLdouble h);
 	static Mesh* generaContCuboTexCor(GLdouble l);
 	static Mesh* generaParedCuboTexCor(GLdouble w, GLdouble h);

@@ -128,18 +128,18 @@ void Scene::escena3D() {
 	Estrella3DTexCor* estrella2 = new Estrella3DTexCor(6, 4, 3);
 	m = estrella2->getModelMat();
 	m = translate(m, dvec3(20, 20, 20));
-	m = rotate(m, radians(180.0), dvec3(1, 0, 0));
+	m = rotate(m, radians(-180.0), dvec3(1, 0, 0));
 	estrella2->setModelMat(m);
 	grObjects.push_back(estrella2);
 
-	Foto* foto = new Foto(50, 25);
+	Foto* foto = new Foto(50, 25, 1, 1);
 	m = foto->getModelMat();
 	m = translate(m, dvec3(-30, 1, -17.5));
 	m = rotate(m, radians(90.0), dvec3(1, 0, 0));
 	foto->setModelMat(m);
 	grObjects.push_back(foto);
 
-	ParedTexCor* pared = new ParedTexCor(100, 50); //PAREDES AQUI
+	ParedTexCor* pared = new ParedTexCor(100, 50);
 	m = pared->getModelMat();
 	m = translate(m, dvec3(0, 25, 0));
 	pared->setModelMat(m);
