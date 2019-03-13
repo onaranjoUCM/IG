@@ -24,7 +24,6 @@ public:
 	static Mesh* generaEstrella3DTexCor(GLdouble re, GLdouble np, GLdouble h);
 	static Mesh* generaContCuboTexCor(GLdouble l);
 	static Mesh* generaParedCuboTexCor(GLdouble w, GLdouble h);
-	static Mesh* generaFoto(GLdouble w, GLdouble h);
 
 	Mesh(void) { };
 	~Mesh(void);

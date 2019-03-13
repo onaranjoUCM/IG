@@ -14,7 +14,7 @@ public:
 	// cargar y transferir a GPU
 	void bind(GLint modo = GL_REPLACE); // para mezcla de colores
 	void unbind() { glBindTexture(GL_TEXTURE_2D, 0); };
-	void loadColorBuffer(GLint level, GLenum internalFormat, GLint xleft, GLint ybottom, GLsizei w, GLsizei h, GLint border);
+	void loadColorBuffer();
 protected:
 	GLuint w, h; // dimensiones de la imagen
 	GLuint id; // identificador interno (GPU) de la textura

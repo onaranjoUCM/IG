@@ -308,7 +308,6 @@ void ParedTexCor::render(Camera const & cam) {
 
 Foto::Foto(GLdouble w, GLdouble h) {
 	mesh = Mesh::generaRectanguloTexCor(w, h);
-	texture.load("Images/cristalTri.bmp");
 }
 
 Foto::~Foto() {
@@ -318,6 +317,7 @@ Foto::~Foto() {
 void Foto::render(Camera const & cam) {
 	if (mesh != nullptr) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		texture.loadColorBuffer();
 		texture.bind();
 		glColor3d(0.0, 0.0, 1.0);
 		uploadMvM(cam.getViewMat());

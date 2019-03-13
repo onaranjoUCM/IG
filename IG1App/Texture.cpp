@@ -16,9 +16,12 @@ void Texture::bind(GLint modo) { // modo para la mezcla los colores
 	// modos: GL_REPLACE, GL_MODULATE, GL_ADD …
 }
 
-void Texture::loadColorBuffer(GLint level, GLenum internalFormat, GLint xleft, GLint ybottom, GLsizei w, GLsizei h, GLint border) {
-	glCopyTexImage2D(GL_TEXTURE_2D, level, internalFormat, xleft, ybottom, w, h, border);
-	glReadBuffer(GL_FRONT / GL_BACK);
+void Texture::loadColorBuffer() {
+	if (id == 0) { init(); }
+	glReadBuffer(GL_FRONT);
+	glBindTexture(GL_TEXTURE_2D, id);
+	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0);
+	glReadBuffer(GL_BACK);
 }
 
 void Texture::load(const std::string & BMP_Name, GLubyte alpha) {
