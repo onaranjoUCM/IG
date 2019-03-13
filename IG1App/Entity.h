@@ -156,7 +156,7 @@ public:
 	Texture texture;
 
 	virtual void render(Camera const& cam);
-	virtual void update() {};
+	virtual void update();
 };
 
 //-------------------------------------------------------------------------
@@ -179,6 +179,19 @@ class ParedTexCor : public Entity {
 public:
 	ParedTexCor(GLdouble w, GLdouble h);
 	~ParedTexCor();
+
+	Texture texture;
+
+	virtual void render(Camera const& cam);
+	virtual void update() {};
+};
+
+//-------------------------------------------------------------------------
+
+class Foto : public Entity {
+public:
+	Foto(GLdouble w, GLdouble h);
+	~Foto();
 
 	Texture texture;
 

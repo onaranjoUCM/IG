@@ -148,6 +148,8 @@ Mesh * Mesh::generaTriangulo(GLdouble r)
 	return m;
 }
 
+//-------------------------------------------------------------------------
+
 Mesh * Mesh::generaTrianguloRGB(GLdouble r)
 {
 	Mesh* m = generaTriangulo(r);
@@ -175,6 +177,8 @@ Mesh * Mesh::generaRectangulo(GLdouble w, GLdouble h)
 
 	return m;
 }
+
+//-------------------------------------------------------------------------
 
 Mesh * Mesh::generaRectanguloRGB(GLdouble w, GLdouble h) {
 	Mesh* m = generaRectangulo(w, h);
@@ -269,7 +273,7 @@ Mesh * Mesh::generaContCubo(GLdouble l) {
 
 //-------------------------------------------------------------------------
 
-Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) {
+Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h) {
 	Mesh* m = new Mesh();
 	m->primitive = GL_TRIANGLE_STRIP;
 	m->numVertices = 4;
@@ -335,6 +339,8 @@ Mesh * Mesh::generaContCuboTexCor(GLdouble l) {
 
 	return m;
 }
+
+//-------------------------------------------------------------------------
 
 Mesh * Mesh::generaParedCuboTexCor(GLdouble w, GLdouble h) {
 	Mesh* m = new Mesh();

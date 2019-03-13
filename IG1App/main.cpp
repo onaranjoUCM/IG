@@ -106,6 +106,9 @@ void key(unsigned char key, int x, int y)
   case 27:  // Escape key 
     glutLeaveMainLoop();  // Freeglut's sentence for stopping glut's main loop 
     break;
+  case 51:
+	  scene.escena3D();
+	  break;
   case '+': 
     camera.uploadScale(+0.01);   // zoom in  (increases the scale)
     break;

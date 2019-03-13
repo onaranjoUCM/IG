@@ -108,29 +108,36 @@ void Scene::escena3D() {
 
 	CajaTexCor* caja = new CajaTexCor(10);
 	m = caja->getModelMat();
-	m = translate(m, dvec3(0, 5, 0));
+	m = translate(m, dvec3(20, 5, 20));
 	caja->setModelMat(m);
 	grObjects.push_back(caja);
 
 	RectanguloRGB * tapa = new RectanguloRGB(10, 10);
 	m = tapa->getModelMat();
-	m = translate(m, dvec3(-5, 1, -5));
+	m = translate(m, dvec3(15, 1, 15));
 	m = rotate(m, radians(90.0), dvec3(1, 0, 0));
 	tapa->setModelMat(m);
 	grObjects.push_back(tapa);
 
 	Estrella3DTexCor* estrella1 = new Estrella3DTexCor(6, 4, 3);
 	m = estrella1->getModelMat();
-	m = translate(m, dvec3(0, 20, 0));
+	m = translate(m, dvec3(20, 20, 20));
 	estrella1->setModelMat(m);
 	grObjects.push_back(estrella1);
 
 	Estrella3DTexCor* estrella2 = new Estrella3DTexCor(6, 4, 3);
 	m = estrella2->getModelMat();
-	m = translate(m, dvec3(0, 20, 0));
+	m = translate(m, dvec3(20, 20, 20));
 	m = rotate(m, radians(180.0), dvec3(1, 0, 0));
 	estrella2->setModelMat(m);
 	grObjects.push_back(estrella2);
+
+	Foto* foto = new Foto(50, 25);
+	m = foto->getModelMat();
+	m = translate(m, dvec3(-30, 1, -17.5));
+	m = rotate(m, radians(90.0), dvec3(1, 0, 0));
+	foto->setModelMat(m);
+	grObjects.push_back(foto);
 
 	ParedTexCor* pared = new ParedTexCor(100, 50); //PAREDES AQUI
 	m = pared->getModelMat();

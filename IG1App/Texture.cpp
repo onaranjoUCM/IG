@@ -16,6 +16,11 @@ void Texture::bind(GLint modo) { // modo para la mezcla los colores
 	// modos: GL_REPLACE, GL_MODULATE, GL_ADD …
 }
 
+void Texture::loadColorBuffer(GLint level, GLenum internalFormat, GLint xleft, GLint ybottom, GLsizei w, GLsizei h, GLint border) {
+	glCopyTexImage2D(GL_TEXTURE_2D, level, internalFormat, xleft, ybottom, w, h, border);
+	glReadBuffer(GL_FRONT / GL_BACK);
+}
+
 void Texture::load(const std::string & BMP_Name, GLubyte alpha) {
 	if (id == 0) init();
 	PixMap32RGBA pixMap; // var. local para cargar la imagen del archivo

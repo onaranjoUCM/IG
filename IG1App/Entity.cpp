@@ -197,7 +197,7 @@ void Caja::update() { }
 //-------------------------------------------------------------------------
 
 RectanguloTexCor::RectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) : Entity() {
-	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
+	mesh = Mesh::generaRectanguloTexCor(w, h);
 	texture.load("Images/baldosaC.bmp");
 }
 
@@ -238,6 +238,14 @@ void Estrella3DTexCor::render(Camera const & cam) {
 	}
 }
 
+void Estrella3DTexCor::update() {
+	setModelMat(glm::dmat4(1));
+	glm::dmat4 m = translate(getModelMat(), dvec3(0, 20, 0));
+	m = rotate(m, radians(angle += 5.0), dvec3(0, 1, 0));
+	m = rotate(m, radians(angle += 5.0), dvec3(0, 0, 1));
+	setModelMat(m);
+}
+
 //-------------------------------------------------------------------------
 
 CajaTexCor::CajaTexCor(GLdouble l) : Entity() {
@@ -271,6 +279,8 @@ void CajaTexCor::render(Camera const & cam) {
 	}
 }
 
+//-------------------------------------------------------------------------
+
 ParedTexCor::ParedTexCor(GLdouble w, GLdouble h) {
 	mesh = Mesh::generaParedCuboTexCor(w, h);
 	texture.load("Images/cristalTri.bmp", 100);
@@ -291,5 +301,27 @@ void ParedTexCor::render(Camera const & cam) {
 		texture.unbind();
 		glDepthMask(GL_TRUE);
 		glDisable(GL_BLEND);
+	}
+}
+
+//-------------------------------------------------------------------------
+
+Foto::Foto(GLdouble w, GLdouble h) {
+	mesh = Mesh::generaRectanguloTexCor(w, h);
+	texture.load("Images/cristalTri.bmp");
+}
+
+Foto::~Foto() {
+	delete mesh; mesh = nullptr;
+}
+
+void Foto::render(Camera const & cam) {
+	if (mesh != nullptr) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		texture.bind();
+		glColor3d(0.0, 0.0, 1.0);
+		uploadMvM(cam.getViewMat());
+		mesh->render();
+		texture.unbind();
 	}
 }
