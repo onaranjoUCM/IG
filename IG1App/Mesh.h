@@ -23,7 +23,7 @@ public:
 	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	static Mesh* generaEstrella3DTexCor(GLdouble re, GLdouble np, GLdouble h);
 	static Mesh* generaContCuboTexCor(GLdouble l);
-	static Mesh* generaParedCuboTexCor(GLdouble l);
+	static Mesh* generaParedCuboTexCor(GLdouble w, GLdouble h);
 
 	Mesh(void) { };
 	~Mesh(void);

@@ -177,7 +177,7 @@ public:
 
 class ParedTexCor : public Entity {
 public:
-	ParedTexCor(GLdouble l);
+	ParedTexCor(GLdouble w, GLdouble h);
 	~ParedTexCor();
 
 	Texture texture;

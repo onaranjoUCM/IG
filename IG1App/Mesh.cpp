@@ -336,21 +336,34 @@ Mesh * Mesh::generaContCuboTexCor(GLdouble l) {
 	return m;
 }
 
-Mesh * Mesh::generaParedCuboTexCor(GLdouble l)
-{
-	Mesh* m = generaContCubo(l);
+Mesh * Mesh::generaParedCuboTexCor(GLdouble w, GLdouble h) {
+	Mesh* m = new Mesh();
+	m->primitive = GL_TRIANGLE_STRIP;
+	m->numVertices = 10;
+	m->vertices = new dvec3[m->numVertices];
+
+	m->vertices[0] = dvec3(-w / 2, h / 2, -w / 2);
+	m->vertices[1] = dvec3(-w / 2, -h / 2, -w / 2);
+	m->vertices[2] = dvec3(-w / 2, h / 2, w / 2);
+	m->vertices[3] = dvec3(-w / 2, -h / 2, w / 2);
+	m->vertices[4] = dvec3(w / 2, h / 2, w / 2);
+	m->vertices[5] = dvec3(w / 2, -h / 2, w / 2);
+	m->vertices[6] = dvec3(w / 2, h / 2, -w / 2);
+	m->vertices[7] = dvec3(w / 2, -h / 2, -w / 2);
+	m->vertices[8] = dvec3(-w / 2, h / 2, -w / 2);
+	m->vertices[9] = dvec3(-w / 2, -h / 2, -w / 2);
 
 	m->textCoords = new dvec2[m->numVertices];
 	m->textCoords[0] = dvec2(0, 0);
-	m->textCoords[1] = dvec2(0, l / 10);
-	m->textCoords[2] = dvec2(l / 10, 0);
-	m->textCoords[3] = dvec2(l / 10, l / 10);
+	m->textCoords[1] = dvec2(0, h / 50);
+	m->textCoords[2] = dvec2(w / 100, 0);
+	m->textCoords[3] = dvec2(w / 100, h / 50);
 	m->textCoords[4] = dvec2(0, 0);
-	m->textCoords[5] = dvec2(0, l / 10);
-	m->textCoords[6] = dvec2(l / 10, 0);
-	m->textCoords[7] = dvec2(l / 10, l / 10);
+	m->textCoords[5] = dvec2(0, h / 50);
+	m->textCoords[6] = dvec2(w / 100, 0);
+	m->textCoords[7] = dvec2(w / 100, h / 50);
 	m->textCoords[8] = dvec2(0, 0);
-	m->textCoords[9] = dvec2(0, l / 10);
+	m->textCoords[9] = dvec2(0, h / 50);
 
 	return m;
 }

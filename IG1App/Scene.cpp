@@ -34,11 +34,6 @@ void Scene::init()
 		suelo->setModelMat(m);
 		grObjects.push_back(suelo);
 
-		ParedTexCor* pared = new ParedTexCor(100);//PAREDES AQUI
-		m = pared->getModelMat();
-		m = translate(m, dvec3(10, 0, 0));
-		//grObjects.push_back(pared);
-
 		CajaTexCor* caja = new CajaTexCor(10);
 		m = caja->getModelMat();
 		m = translate(m, dvec3(0, 5, 0));
@@ -64,6 +59,12 @@ void Scene::init()
 		m = rotate(m, radians(180.0), dvec3(1, 0, 0));
 		estrella2->setModelMat(m);
 		grObjects.push_back(estrella2);
+
+		ParedTexCor* pared = new ParedTexCor(100, 50); //PAREDES AQUI
+		m = pared->getModelMat();
+		m = translate(m, dvec3(0, 25, 0));
+		pared->setModelMat(m);
+		grObjects.push_back(pared);
 }
 //-------------------------------------------------------------------------
 

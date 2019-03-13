@@ -271,9 +271,9 @@ void CajaTexCor::render(Camera const & cam) {
 	}
 }
 
-ParedTexCor::ParedTexCor(GLdouble l) {
-	mesh = Mesh::generaParedCuboTexCor(l);
-	texture.load("Images/container.bmp");
+ParedTexCor::ParedTexCor(GLdouble w, GLdouble h) {
+	mesh = Mesh::generaParedCuboTexCor(w, h);
+	texture.load("Images/cristalTri.bmp", 100);
 }
 
 ParedTexCor::~ParedTexCor() {
@@ -282,13 +282,14 @@ ParedTexCor::~ParedTexCor() {
 
 void ParedTexCor::render(Camera const & cam) {
 	if (mesh != nullptr) {
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDepthMask(GL_FALSE);
 		texture.bind();
-		glClearColor(0.3, 1.0, 0.4, 0.0);
-		//glColor3d(0.0, 0.0, 1.0);
 		uploadMvM(cam.getViewMat());
 		mesh->render();
 		texture.unbind();
-		glLineWidth(2);
+		glDepthMask(GL_TRUE);
+		glDisable(GL_BLEND);
 	}
 }
