@@ -101,6 +101,8 @@ public:
 	~TrianguloAnimado();
 	virtual void render(Camera const& cam);
 	virtual void update();
+
+	glm::dmat4 modelMatIni;
 };
 
 //-------------------------------------------------------------------------
@@ -112,6 +114,7 @@ public:
 	Estrella3D(GLdouble re, GLdouble np, GLdouble h);
 	~Estrella3D();
 
+	glm::dmat4 modelMatIni;
 	Texture texture;
 
 	virtual void render(Camera const& cam);
@@ -154,6 +157,7 @@ public:
 	~Estrella3DTexCor();
 
 	Texture texture;
+	glm::dmat4 modelMatIni;
 
 	virtual void render(Camera const& cam);
 	virtual void update();

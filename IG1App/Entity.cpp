@@ -112,6 +112,7 @@ void RectanguloRGB::render(Camera const & cam) {
 
 TrianguloAnimado::TrianguloAnimado(GLdouble r) : Entity() {
 	mesh = Mesh::generaTrianguloAnimado(r);
+	modelMatIni = modelMat;
 }
 
 TrianguloAnimado::~TrianguloAnimado() {
@@ -129,7 +130,7 @@ void TrianguloAnimado::render(Camera const & cam) {
 void TrianguloAnimado::update() {
 	dmat4 m;
 
-	setModelMat(dmat4(1));
+	setModelMat(modelMatIni);
 	m = rotate(getModelMat(), radians(angle += 1.0), dvec3(0, 0, 1));
 	m = translate(m, dvec3(40, 40, 0));
 	m = rotate(m, radians(angle+=10.0), dvec3(0, 0, 1));
@@ -141,8 +142,7 @@ void TrianguloAnimado::update() {
 
 Estrella3D::Estrella3D(GLdouble re, GLdouble np, GLdouble h) : Entity() {
 	mesh = Mesh::generaEstrella3D(re, np, h);
-	dmat4 m = translate(modelMat, dvec3(0, 20, 0));
-	setModelMat(m);
+	modelMatIni = modelMat;
 }
 
 Estrella3D::~Estrella3D() {
@@ -163,9 +163,8 @@ void Estrella3D::render(Camera const & cam) {
 }
 
 void Estrella3D::update() {
-	setModelMat(dmat4(1));
-	dmat4 m = translate(getModelMat(), dvec3(0, 20, 0));
-	m = rotate(m, radians(angle+=5.0), dvec3(0, 1, 0));
+	setModelMat(modelMatIni);
+	dmat4 m = rotate(getModelMat(), radians(angle+=5.0), dvec3(0, 1, 0));
 	m = rotate(m, radians(angle+=5.0), dvec3(0, 0, 1));
 	setModelMat(m);
 }
@@ -218,6 +217,7 @@ void RectanguloTexCor::render(Camera const & cam) {
 
 Estrella3DTexCor::Estrella3DTexCor(GLdouble re, GLdouble np, GLdouble h) : Entity() {
 	mesh = Mesh::generaEstrella3DTexCor(re, np, h);
+	modelMatIni = modelMat;
 	texture.load("Images/baldosaP.bmp");
 }
 
@@ -232,14 +232,16 @@ void Estrella3DTexCor::render(Camera const & cam) {
 		glColor3d(0.0, 0.0, 1.0);
 		uploadMvM(cam.getViewMat());
 		mesh->render();
+		modelMat = rotate(modelMat, radians(180.0), dvec3(1, 0, 0));
+		uploadMvM(cam.getViewMat());
+		mesh->render();
 		texture.unbind();
 	}
 }
 
 void Estrella3DTexCor::update() {
-	setModelMat(glm::dmat4(1));
-	glm::dmat4 m = translate(getModelMat(), dvec3(0, 20, 0));
-	m = rotate(m, radians(angle += 5.0), dvec3(0, 1, 0));
+	setModelMat(modelMatIni);
+	glm::dmat4 m = rotate(getModelMat(), radians(angle += 5.0), dvec3(0, 1, 0));
 	m = rotate(m, radians(angle += 5.0), dvec3(0, 0, 1));
 	setModelMat(m);
 }

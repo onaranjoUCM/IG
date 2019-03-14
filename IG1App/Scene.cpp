@@ -82,12 +82,14 @@ void Scene::escena2D() {
 	m = tAnimado->getModelMat();
 	m = translate(m, dvec3(0, -50, 0));
 	tAnimado->setModelMat(m);
+	tAnimado->modelMatIni = m;
 	grObjects.push_back(tAnimado);
 
 	Estrella3D* estrella = new Estrella3D(10, 6, 3);
 	m = estrella->getModelMat();
 	m = translate(m, dvec3(-50, 0, 0));
 	estrella->setModelMat(m);
+	estrella->modelMatIni = m;
 	grObjects.push_back(estrella);
 
 	Caja* caja = new Caja(10);
@@ -119,22 +121,16 @@ void Scene::escena3D() {
 	tapa->setModelMat(m);
 	grObjects.push_back(tapa);
 
-	Estrella3DTexCor* estrella1 = new Estrella3DTexCor(6, 4, 3);
-	m = estrella1->getModelMat();
+	Estrella3DTexCor* estrella3D = new Estrella3DTexCor(6, 4, 3);
+	m = estrella3D->getModelMat();
 	m = translate(m, dvec3(20, 20, 20));
-	estrella1->setModelMat(m);
-	grObjects.push_back(estrella1);
-
-	Estrella3DTexCor* estrella2 = new Estrella3DTexCor(6, 4, 3);
-	m = estrella2->getModelMat();
-	m = translate(m, dvec3(20, 20, 20));
-	m = rotate(m, radians(-180.0), dvec3(1, 0, 0));
-	estrella2->setModelMat(m);
-	grObjects.push_back(estrella2);
+	estrella3D->setModelMat(m);
+	estrella3D->modelMatIni = m;
+	grObjects.push_back(estrella3D);
 
 	Foto* foto = new Foto(50, 25, 1, 1);
 	m = foto->getModelMat();
-	m = translate(m, dvec3(-30, 1, -17.5));
+	m = translate(m, dvec3(-25, 1, -10));
 	m = rotate(m, radians(90.0), dvec3(1, 0, 0));
 	foto->setModelMat(m);
 	grObjects.push_back(foto);
