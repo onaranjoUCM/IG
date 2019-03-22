@@ -25,7 +25,11 @@ Viewport viewPort(800, 600);
 Camera camera(&viewPort);    
 
 // Graphics objects of the scene
-Scene scene;   
+Scene scene;
+
+// Camera
+glm::dvec2 mCoord;
+int mBot;
 
 //----------- Callbacks ----------------------------------------------------
 
@@ -33,6 +37,9 @@ void display();
 void resize(int newWidth, int newHeight);
 void key(unsigned char key, int x, int y);
 void specialKey(int key, int x, int y);
+void mouse(int button, int state, int x, int y);
+void motion(int x, int y);
+void mouseWheel(int wheelNumber, int direction, int x, int y);
 
 //-------------------------------------------------------------------------
 
@@ -61,6 +68,9 @@ int main(int argc, char *argv[])
   glutKeyboardFunc(key);
   glutSpecialFunc(specialKey);
   glutDisplayFunc(display);
+  glutMouseFunc(mouse);
+  glutMotionFunc(motion);
+  glutMouseWheelFunc(mouseWheel);
  
   cout << glGetString(GL_VERSION) << '\n';
   cout << glGetString(GL_VENDOR) << '\n';
@@ -136,6 +146,7 @@ void key(unsigned char key, int x, int y)
 
 void specialKey(int key, int x, int y)
 {
+	/*
   bool need_redisplay = true;
 
   switch (key) {
@@ -158,6 +169,56 @@ void specialKey(int key, int x, int y)
 
   if (need_redisplay)
     glutPostRedisplay();
+	*/
 }
+
 //-------------------------------------------------------------------------
 
+void mouse(int button, int state, int x, int y) {
+	mBot = button;
+	//y = glutGet(GLUT_WINDOW_HEIGHT) - y;
+	mCoord = glm::dvec2(x, y);
+}
+
+//-------------------------------------------------------------------------
+
+void motion(int x, int y) {
+	if (mBot == GLUT_LEFT_BUTTON) {
+		glm::dvec2 mp = mCoord;
+		mCoord = glm::dvec2(x, y);
+		mp = (mCoord - mp);
+		camera.orbit(mp.x * 0.05, mp.y);
+		glutPostRedisplay();
+	}
+	else if (mBot == GLUT_RIGHT_BUTTON) {
+		glm::dvec2 mp = mCoord;
+		mCoord = glm::dvec2(x, y);
+		mp = (mCoord - mp);
+		camera.moveLR(-mp.x);
+		camera.moveUD(mp.y);
+		glutPostRedisplay();
+	}
+}
+
+//-------------------------------------------------------------------------
+
+void mouseWheel(int wheelNumber, int direction, int x, int y) {
+	int m = glutGetModifiers();
+	if (m == 0) {
+		if (direction == 1) {
+			camera.moveUD(5);
+		}
+		else {
+			camera.moveUD(-5);
+		}
+		glutPostRedisplay();
+	} else if (GLUT_ACTIVE_CTRL) {
+		if (direction == 1) {
+			camera.moveFB(5);
+		}
+		else {
+			camera.moveFB(-5);
+		}
+		glutPostRedisplay();
+	}
+}
