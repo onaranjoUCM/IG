@@ -115,9 +115,15 @@ void key(unsigned char key, int x, int y)
   switch (key) {
   case 27:  // Escape key 
     glutLeaveMainLoop();  // Freeglut's sentence for stopping glut's main loop 
-    break;
+	break;
+  case 50:
+	  scene.escena2D();
+	  break;
   case 51:
 	  scene.escena3D();
+	  break;
+  case 52:
+	  scene.escenaIlum();
 	  break;
   case '+': 
     camera.uploadScale(+0.01);   // zoom in  (increases the scale)
@@ -133,6 +139,12 @@ void key(unsigned char key, int x, int y)
 	break;
   case 'u':
 	  scene.update();
+	  break;
+  case 'p':
+	  camera.changePrj();
+	  break;
+  case 'c':
+	  camera.cenit();
 	  break;
   default:
 	need_redisplay = false;

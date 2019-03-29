@@ -25,6 +25,7 @@ public:
 
 	void escena2D();
 	void escena3D();
+	void escenaIlum();
 
 protected:
 

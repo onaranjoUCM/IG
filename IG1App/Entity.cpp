@@ -325,3 +325,23 @@ void Foto::render(Camera const & cam) {
 		texture.unbind();
 	}
 }
+
+//-------------------------------------------------------------------------
+
+Esfera::Esfera(GLdouble r, GLdouble px, GLdouble py, GLdouble pz, std::string t) : Entity() {
+	//texture.load(t, 100);
+	qObj = gluNewQuadric();
+}
+
+Esfera::~Esfera() {
+	gluDeleteQuadric(qObj);
+}
+
+void Esfera::render(Camera const & cam) {
+	gluQuadricDrawStyle(qObj, GLU_FILL);
+	gluQuadricNormals(qObj, GLU_SMOOTH);
+	gluQuadricOrientation(qObj, GLU_OUTSIDE);
+	//gluQuadricTexture(qObj, GL_TRUE);
+	gluSphere(qObj, 10, 10, 10);
+	uploadMvM(cam.getViewMat());
+}

@@ -205,4 +205,18 @@ public:
 
 //-------------------------------------------------------------------------
 
+class Esfera : public Entity {
+public:
+	Esfera(GLdouble r, GLdouble px, GLdouble py, GLdouble pz, std::string t);
+	~Esfera();
+
+	GLUquadric* qObj;
+	Texture texture;
+
+	virtual void render(Camera const& cam);
+	virtual void update() {};
+};
+
+//-------------------------------------------------------------------------
+
 #endif //_H_Entities_H_

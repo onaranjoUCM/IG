@@ -46,6 +46,7 @@ public:
 
 	void orbit(GLdouble incAng, GLdouble incY);
 	void changePrj();
+	void cenit();
 protected:
 	
 	glm::dmat4 viewMat;    // view matrix = inverse of modeling matrix
@@ -63,7 +64,7 @@ protected:
 	GLdouble ang;
 	GLdouble radio = 1000;
 
-	bool orto;
+	bool orto = true;
 
 	GLdouble xRight, xLeft, yTop, yBot;    // size of scene visible area
 	GLdouble nearVal = 1, farVal = 10000;  // view volume

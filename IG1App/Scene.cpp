@@ -12,6 +12,7 @@ void Scene::init()
   glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
   glEnable(GL_DEPTH_TEST);  // enable Depth test 
   glEnable(GL_TEXTURE_2D);
+  glEnable(GL_CULL_FACE);
      
   // lights
   // textures  
@@ -140,4 +141,21 @@ void Scene::escena3D() {
 	m = translate(m, dvec3(0, 25, 0));
 	pared->setModelMat(m);
 	grObjects.push_back(pared);
+}
+
+void Scene::escenaIlum() {
+	grObjects.clear();
+
+	EjesRGB* ejes = new EjesRGB(200.0);
+	grObjects.push_back(ejes);
+
+	RectanguloTexCor* suelo = new RectanguloTexCor(100, 100, 10, 10);
+	glm::dmat4 m = suelo->getModelMat();
+	m = rotate(m, radians(90.0), dvec3(1, 0, 0));
+	m = translate(m, dvec3(-50, -50, 0));
+	suelo->setModelMat(m);
+	grObjects.push_back(suelo);
+	
+	Esfera* esfera = new Esfera(5, 0, 10, 0, "Images/earth.bmp");
+	grObjects.push_back(esfera);
 }

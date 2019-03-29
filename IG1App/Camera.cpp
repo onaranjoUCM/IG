@@ -33,23 +33,7 @@ void Camera::uploadVM() const
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(viewMat));
 }
-//-------------------------------------------------------------------------
-/*
-void Camera::pitch(GLdouble a) 
-{  
-	viewMat = rotate(viewMat, glm::radians(-a), glm::dvec3(1.0, 0, 0));
-}
-//-------------------------------------------------------------------------
-void Camera::yaw(GLdouble a)
-{
-	viewMat = rotate(viewMat, glm::radians(-a), glm::dvec3(0, 1.0, 0));
-}
-//-------------------------------------------------------------------------
-void Camera::roll(GLdouble a)
-{
-	viewMat = rotate(viewMat, glm::radians(-a), glm::dvec3(0, 0, 1.0));
-}
-*/
+
 //-------------------------------------------------------------------------
 
 void Camera::uploadSize(GLdouble aw, GLdouble ah)
@@ -58,8 +42,12 @@ void Camera::uploadSize(GLdouble aw, GLdouble ah)
 	xLeft = -xRight;
 	yTop = ah / 2.0;
 	yBot = -yTop;
-	projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
-
+	if (orto) {
+		projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
+	}
+	else {
+		projMat = frustum(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal * 500, farVal);
+	}
 	uploadPM();
 }
 //-------------------------------------------------------------------------
@@ -68,8 +56,12 @@ void Camera::uploadScale(GLdouble s)
 {
 	factScale -= s;
 	if (factScale < 0) factScale = 0.01;
-	projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
-
+	if (orto) {
+		projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
+	}
+	else {
+		projMat = frustum(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal * 500, farVal);
+	}
 	uploadPM();
 }
 void Camera::setAxes() {
@@ -98,6 +90,12 @@ void Camera::moveFB(GLdouble cs) {
 void Camera::moveUD(GLdouble cs) {
 	eye += upward * cs;
 	look += upward * cs;
+	setVM();
+}
+
+void Camera::cenit() {
+	eye = glm::dvec3(0, 100, 0.1);
+	look = glm::dvec3(0, 0, 0);
 	setVM();
 }
 
