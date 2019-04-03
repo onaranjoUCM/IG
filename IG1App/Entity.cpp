@@ -331,6 +331,7 @@ void Foto::render(Camera const & cam) {
 Esfera::Esfera(GLdouble r, GLdouble px, GLdouble py, GLdouble pz, std::string t) : Entity() {
 	//texture.load(t, 100);
 	qObj = gluNewQuadric();
+	glTranslatef(px, py, pz);
 }
 
 Esfera::~Esfera() {
