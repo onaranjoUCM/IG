@@ -205,12 +205,25 @@ public:
 
 //-------------------------------------------------------------------------
 
-class Esfera : public Entity {
+class EntityMaterial : public Entity {
 public:
-	Esfera(GLdouble r, GLdouble px, GLdouble py, GLdouble pz, std::string t);
+	EntityMaterial(std::string t);
+	~EntityMaterial();
+
+	GLint id;
+	Texture* texture;
+	void setTexture(Texture* tex) { texture = tex; }
+};
+
+//-------------------------------------------------------------------------
+
+class Esfera : public EntityMaterial {
+public:
+	Esfera(GLdouble r, std::string t);
 	~Esfera();
+
 	GLUquadric* qObj;
-	Texture texture;
+	int radius, x, y, z;
 
 	virtual void render(Camera const& cam);
 	virtual void update() {};

@@ -9,7 +9,7 @@ using namespace glm;
 
 void Scene::init()
 { // OpenGL basic setting
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
+  glClearColor(0.0, 0.0, 0.2, 1.0);  // background color (alpha=1 -> opaque)
   glEnable(GL_DEPTH_TEST);  // enable Depth test 
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_CULL_FACE);
@@ -19,7 +19,7 @@ void Scene::init()
   // meshes
 
   // Graphics objects (entities) of the scene
-  escena2D();
+  escenaIlum();
   
 }
 //-------------------------------------------------------------------------
@@ -148,14 +148,41 @@ void Scene::escenaIlum() {
 
 	EjesRGB* ejes = new EjesRGB(200.0);
 	grObjects.push_back(ejes);
-
+	
 	RectanguloTexCor* suelo = new RectanguloTexCor(100, 100, 10, 10);
 	glm::dmat4 m = suelo->getModelMat();
 	m = rotate(m, radians(90.0), dvec3(1, 0, 0));
 	m = translate(m, dvec3(-50, -50, 0));
 	suelo->setModelMat(m);
 	grObjects.push_back(suelo);
-	
-	Esfera* esfera = new Esfera(5, 0, 10, 0, "Images/earth.bmp");
-	grObjects.push_back(esfera);
+
+	Esfera* tierra = new Esfera(10, "Images/earth.bmp");
+	m = tierra->getModelMat();
+	m = translate(m, dvec3(0, 100, 0));
+	tierra->setModelMat(m);
+	grObjects.push_back(tierra);
+
+	Esfera* luna = new Esfera(20, "Images/moon.bmp");
+	m = luna->getModelMat();
+	m = translate(m, dvec3(-100, 100, 0));
+	luna->setModelMat(m);
+	grObjects.push_back(luna);
+
+	Esfera* marte = new Esfera(30, "Images/mars.bmp");
+	m = marte->getModelMat();
+	m = translate(m, dvec3(100, 100, 0));
+	marte->setModelMat(m);
+	grObjects.push_back(marte);
+
+	Esfera* sol = new Esfera(50, "Images/sun.bmp");
+	m = sol->getModelMat();
+	m = translate(m, dvec3(0, 200, 0));
+	sol->setModelMat(m);
+	grObjects.push_back(sol);
+
+	Esfera* jupiter = new Esfera(200, "Images/terreno.bmp");
+	m = jupiter->getModelMat();
+	m = translate(m, dvec3(0, -200, 200));
+	jupiter->setModelMat(m);
+	grObjects.push_back(jupiter);
 }
