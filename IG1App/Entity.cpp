@@ -348,6 +348,7 @@ Esfera::~Esfera() {
 }
 
 void Esfera::render(Camera const & cam) {
+	material.upload();
 	uploadMvM(cam.getViewMat());
 	gluQuadricTexture(qObj, GL_TRUE);
 	glBindTexture(GL_TEXTURE_2D, id);

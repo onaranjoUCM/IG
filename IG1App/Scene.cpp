@@ -2,6 +2,7 @@
 
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
+#include "Material.h"
 
 using namespace glm;
 
@@ -157,30 +158,45 @@ void Scene::escenaIlum() {
 	grObjects.push_back(suelo);
 
 	Esfera* tierra = new Esfera(10, "Images/earth.bmp");
+	Material pewter = Material();
+	pewter.setPewter();
+	tierra->setMaterial(pewter);
 	m = tierra->getModelMat();
 	m = translate(m, dvec3(0, 100, 0));
 	tierra->setModelMat(m);
 	grObjects.push_back(tierra);
 
 	Esfera* luna = new Esfera(20, "Images/moon.bmp");
+	Material silver = Material();
+	silver.setSilver();
+	luna->setMaterial(silver);
 	m = luna->getModelMat();
 	m = translate(m, dvec3(-100, 100, 0));
 	luna->setModelMat(m);
 	grObjects.push_back(luna);
 
 	Esfera* marte = new Esfera(30, "Images/mars.bmp");
+	Material copper = Material();
+	silver.setCopper();
+	marte->setMaterial(copper);
 	m = marte->getModelMat();
 	m = translate(m, dvec3(100, 100, 0));
 	marte->setModelMat(m);
 	grObjects.push_back(marte);
 
 	Esfera* sol = new Esfera(50, "Images/sun.bmp");
+	Material gold = Material();
+	gold.setGold();
+	sol->setMaterial(gold);
 	m = sol->getModelMat();
 	m = translate(m, dvec3(0, 200, 0));
 	sol->setModelMat(m);
 	grObjects.push_back(sol);
 
 	Esfera* jupiter = new Esfera(200, "Images/terreno.bmp");
+	Material brass = Material();
+	brass.setBrass();
+	jupiter->setMaterial(brass);
 	m = jupiter->getModelMat();
 	m = translate(m, dvec3(0, -200, 200));
 	jupiter->setModelMat(m);

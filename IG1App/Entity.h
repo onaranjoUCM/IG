@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Texture.h"
+#include "Material.h"
 
 //-------------------------------------------------------------------------
 
@@ -212,7 +213,9 @@ public:
 
 	GLint id;
 	Texture* texture;
+	Material material;
 	void setTexture(Texture* tex) { texture = tex; }
+	void setMaterial(Material m) { material = m; }
 };
 
 //-------------------------------------------------------------------------
