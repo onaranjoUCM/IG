@@ -8,6 +8,9 @@
 #include "Camera.h"
 #include "Entity.h"
 #include "Mesh.h"
+#include "DirLight.h"
+#include "SpotLight.h"
+#include "PosLight.h"
 
 #include <vector>
 
@@ -28,8 +31,9 @@ public:
 	void escenaIlum();
 
 protected:
-
 	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
+	  DirLight* dirLight;
+	  SpotLight* camLight;
 };
 
 //-------------------------------------------------------------------------

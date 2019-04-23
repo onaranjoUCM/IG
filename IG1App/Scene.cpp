@@ -16,6 +16,10 @@ void Scene::init()
   glEnable(GL_CULL_FACE);
      
   // lights
+  dirLight = new DirLight();
+  dirLight->setAmb({0, 0, 0, 1});
+  dirLight->setDir({0, 0, 1});
+  dirLight->enable();
   // textures  
   // meshes
 
@@ -37,6 +41,7 @@ Scene::~Scene()
 
 void Scene::render(Camera const& cam)
 {
+	//camLight->upload(cam.getViewMat());
 	for (Entity* el: grObjects) {
 		el->render(cam);
 	}
