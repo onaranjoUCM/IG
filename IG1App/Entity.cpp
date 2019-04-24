@@ -363,3 +363,16 @@ void Esfera::render(Camera const & cam) {
 
 	glDisable(GL_CULL_FACE);
 }
+
+//-------------------------------------------------------------------------
+
+EsferaLuz::EsferaLuz(GLdouble r, std::string t) :
+	Esfera(r, t) {
+	spotLight = new PosLight();
+	spotLight->uploadLI();
+	spotLight->enable();
+}
+
+EsferaLuz::~EsferaLuz() {
+	Esfera::~Esfera();
+}

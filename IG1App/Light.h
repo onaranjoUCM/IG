@@ -27,11 +27,13 @@ public: // id: identificador interno (GPU) de la luz
   };
   void setAmb(glm::fvec4 amb) { ambient = amb; }
   virtual void upload(glm::dmat4 const &modelViewMat) = 0;
+
   void disable() {
     if (id < GL_LIGHT0 + GL_MAX_LIGHTS) {
       glDisable(id);
     }
   };
+
   void enable() {
     if (id < GL_LIGHT0 + GL_MAX_LIGHTS) {
       glEnable(id);

@@ -41,6 +41,7 @@ protected:
 	  std::vector<Texture*> textures;
 	  DirLight* dirLight;
 	  SpotLight* camLight;
+	  PosLight* legoLight;
 };
 
 //-------------------------------------------------------------------------

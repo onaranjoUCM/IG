@@ -9,6 +9,7 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "Material.h"
+#include "SpotLight.h"
 
 //-------------------------------------------------------------------------
 
@@ -233,5 +234,14 @@ public:
 };
 
 //-------------------------------------------------------------------------
+
+class EsferaLuz : public Esfera {
+	PosLight* spotLight;
+public:
+	EsferaLuz(GLdouble r, std::string t);
+	~EsferaLuz();
+
+	PosLight* getSpotLight() { return spotLight; }
+};
 
 #endif //_H_Entities_H_

@@ -51,6 +51,8 @@ Scene::~Scene()
 
 void Scene::render(Camera const& cam)
 {
+	dirLight->upload(cam.getViewMat());
+	camLight->upload(cam.getViewMat());
 	for (Entity* el: grObjects) {
 		el->render(cam);
 	}
@@ -160,23 +162,17 @@ void Scene::escena3D() {
 
 void Scene::escenaIlum() {
 	grObjects.clear();
-	
-	EjesRGB* ejes = new EjesRGB(200.0);
-	grObjects.push_back(ejes);
-	/*
-	RectanguloTexCor* suelo = new RectanguloTexCor(100, 100, 10, 10);
-	glm::dmat4 m = suelo->getModelMat();
-	m = rotate(m, radians(90.0), dvec3(1, 0, 0));
-	m = translate(m, dvec3(-50, -50, 0));
-	suelo->setModelMat(m);
-	grObjects.push_back(suelo);
-	*/
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_NORMALIZE);
+	glShadeModel(GL_FLAT);
+
 	Esfera* tierra = new Esfera(10, "Images/earth.bmp");
 	Material pewter = Material();
 	pewter.setPewter();
 	tierra->setMaterial(pewter);
 	glm::dmat4 m = tierra->getModelMat();
-	m = translate(m, dvec3(0, 100, 0));
+	m = translate(m, dvec3(200, 100, 0));
 	tierra->setModelMat(m);
 	grObjects.push_back(tierra);
 
@@ -190,9 +186,9 @@ void Scene::escenaIlum() {
 	grObjects.push_back(luna);
 
 	Esfera* marte = new Esfera(30, "Images/mars.bmp");
-	Material copper = Material();
-	silver.setCopper();
-	marte->setMaterial(copper);
+	Material chrome = Material();
+	chrome.setChrome();
+	marte->setMaterial(chrome);
 	m = marte->getModelMat();
 	m = translate(m, dvec3(100, 100, 0));
 	marte->setModelMat(m);
@@ -215,6 +211,14 @@ void Scene::escenaIlum() {
 	m = translate(m, dvec3(0, -200, 200));
 	jupiter->setModelMat(m);
 	grObjects.push_back(jupiter);
+
+	EsferaLuz* lego = new EsferaLuz(30, "Images/lego.bmp");
+	lego->setMaterial(brass);
+	m = lego->getModelMat();
+	m = translate(m, dvec3(0, 100, 0));
+	lego->setModelMat(m);
+	grObjects.push_back(lego);
+	legoLight = lego->getSpotLight();
 }
 
 void Scene::ToggleCamLight() {
@@ -228,8 +232,6 @@ void Scene::ToggleCamLight() {
 	}
 }
 
-void Scene::ToggleSphereLight() {}
-
 void Scene::ToggleDirLight() {
 	if (dirLight->enabled) {
 		dirLight->disable();
@@ -238,5 +240,16 @@ void Scene::ToggleDirLight() {
 	else {
 		dirLight->enable();
 		dirLight->enabled = true;
+	}
+}
+
+void Scene::ToggleSphereLight() {
+	if (legoLight->enabled) {
+		legoLight->disable();
+		legoLight->enabled = false;
+	}
+	else {
+		legoLight->enable();
+		legoLight->enabled = true;
 	}
 }
