@@ -17,10 +17,20 @@ void Scene::init()
      
   // lights
   dirLight = new DirLight();
-  dirLight->setAmb({0, 0, 0, 1});
-  dirLight->setDir({0, 0, 1});
+  dirLight->setDir({0, 0.25, 1});
+  dirLight->uploadLI();
   dirLight->enable();
+
+  camLight = new SpotLight();
+  camLight->uploadLI();
+  camLight->enable();
+
   // textures  
+  for (int i = 0; i < textNames.size(); i++) {
+	  Texture* t = new Texture();
+	  t->load("Images/" + textNames[i] + ".bmp");
+	  textures.push_back(t);
+  }
   // meshes
 
   // Graphics objects (entities) of the scene
@@ -41,7 +51,6 @@ Scene::~Scene()
 
 void Scene::render(Camera const& cam)
 {
-	//camLight->upload(cam.getViewMat());
 	for (Entity* el: grObjects) {
 		el->render(cam);
 	}
@@ -57,7 +66,7 @@ void Scene::update() {
 
 void Scene::escena2D() {
 	grObjects.clear();
-
+	
 	EjesRGB* ejes = new EjesRGB(200.0);
 	grObjects.push_back(ejes);
 
@@ -151,22 +160,22 @@ void Scene::escena3D() {
 
 void Scene::escenaIlum() {
 	grObjects.clear();
-
+	
 	EjesRGB* ejes = new EjesRGB(200.0);
 	grObjects.push_back(ejes);
-	
+	/*
 	RectanguloTexCor* suelo = new RectanguloTexCor(100, 100, 10, 10);
 	glm::dmat4 m = suelo->getModelMat();
 	m = rotate(m, radians(90.0), dvec3(1, 0, 0));
 	m = translate(m, dvec3(-50, -50, 0));
 	suelo->setModelMat(m);
 	grObjects.push_back(suelo);
-
+	*/
 	Esfera* tierra = new Esfera(10, "Images/earth.bmp");
 	Material pewter = Material();
 	pewter.setPewter();
 	tierra->setMaterial(pewter);
-	m = tierra->getModelMat();
+	glm::dmat4 m = tierra->getModelMat();
 	m = translate(m, dvec3(0, 100, 0));
 	tierra->setModelMat(m);
 	grObjects.push_back(tierra);
@@ -206,4 +215,28 @@ void Scene::escenaIlum() {
 	m = translate(m, dvec3(0, -200, 200));
 	jupiter->setModelMat(m);
 	grObjects.push_back(jupiter);
+}
+
+void Scene::ToggleCamLight() {
+	if (camLight->enabled) {
+		camLight->disable();
+		camLight->enabled = false;
+	}
+	else {
+		camLight->enable();
+		camLight->enabled = true;
+	}
+}
+
+void Scene::ToggleSphereLight() {}
+
+void Scene::ToggleDirLight() {
+	if (dirLight->enabled) {
+		dirLight->disable();
+		dirLight->enabled = false;
+	}
+	else {
+		dirLight->enable();
+		dirLight->enabled = true;
+	}
 }

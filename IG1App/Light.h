@@ -5,13 +5,14 @@
 
 class Light { // abstract class
 protected:
-  /*static*/ GLuint cont;                // valor inicial: cont = 0
+  static GLuint cont;                // valor inicial: cont = 0
   GLuint id = GL_LIGHT0 + GL_MAX_LIGHTS; // GL_LIGHTi
   glm::fvec4 ambient = {0.1, 0.1, 0.1, 1};
   glm::fvec4 diffuse = {0.5, 0.5, 0.5, 1};
   glm::fvec4 specular = {0.5, 0.5, 0.5, 1};
 
 public: // id: identificador interno (GPU) de la luz
+	bool enabled = false;
   Light() {
     if (cont < GL_MAX_LIGHTS) {
       id = GL_LIGHT0 + cont;

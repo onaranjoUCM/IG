@@ -348,9 +348,18 @@ Esfera::~Esfera() {
 }
 
 void Esfera::render(Camera const & cam) {
+	glEnable(GL_CULL_FACE);
 	material.upload();
-	uploadMvM(cam.getViewMat());
+
+	gluQuadricDrawStyle(qObj, GLU_FILL);
+	gluQuadricNormals(qObj, GLU_SMOOTH);
+	gluQuadricOrientation(qObj, GLU_OUTSIDE);
 	gluQuadricTexture(qObj, GL_TRUE);
-	glBindTexture(GL_TEXTURE_2D, id);
+	uploadMvM(cam.getViewMat());
+
+	texture->bind(GL_MODULATE);
 	gluSphere(qObj, radius, radius, radius);
+	texture->unbind();
+
+	glDisable(GL_CULL_FACE);
 }

@@ -143,7 +143,16 @@ void key(unsigned char key, int x, int y)
   case 'p':
 	  camera.changePrj();
 	  break;
+  case 'v':
+	  scene.ToggleCamLight();
+	  break;
+  case 'b':
+	  scene.ToggleSphereLight();
+	  break;
   case 'c':
+	  scene.ToggleDirLight();
+	  break;
+  case 'm':
 	  camera.cenit();
 	  break;
   default:

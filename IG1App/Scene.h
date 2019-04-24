@@ -13,6 +13,7 @@
 #include "PosLight.h"
 
 #include <vector>
+#include <string>
 
 //-------------------------------------------------------------------------
 
@@ -30,8 +31,14 @@ public:
 	void escena3D();
 	void escenaIlum();
 
+	void ToggleCamLight();
+	void ToggleSphereLight();
+	void ToggleDirLight();
+
 protected:
 	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
+	  std::vector<std::string> textNames = {"sun", "moon", "earth", "mars", "terreno"};
+	  std::vector<Texture*> textures;
 	  DirLight* dirLight;
 	  SpotLight* camLight;
 };

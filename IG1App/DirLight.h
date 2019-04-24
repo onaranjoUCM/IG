@@ -13,7 +13,7 @@ public:
 		glMatrixMode(GL_MODELVIEW);
 		glLoadMatrixd(value_ptr(modelViewMat));
 		glLightfv(id, GL_POSITION, value_ptr(direction));
-		uploadLI();
+		//uploadLI();
 	};
 	void setDir(glm::fvec3 dir) { direction = glm::fvec4(dir, 0.0); };
 	// -dir ?
