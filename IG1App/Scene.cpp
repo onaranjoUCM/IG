@@ -17,7 +17,7 @@ void Scene::init()
      
   // lights
   dirLight = new DirLight();
-  dirLight->setDir({0, 0.25, 1});
+  dirLight->setDir({0, -0.25, -1});
   dirLight->uploadLI();
   dirLight->enable();
 
@@ -52,7 +52,12 @@ Scene::~Scene()
 void Scene::render(Camera const& cam)
 {
 	dirLight->upload(cam.getViewMat());
+
+	camLight->setPos(cam.getEye());
+	camLight->setDir(cam.getFront());
 	camLight->upload(cam.getViewMat());
+
+	legoLight->upload(cam.getViewMat());
 	for (Entity* el: grObjects) {
 		el->render(cam);
 	}
@@ -219,6 +224,10 @@ void Scene::escenaIlum() {
 	lego->setModelMat(m);
 	grObjects.push_back(lego);
 	legoLight = lego->getSpotLight();
+
+	Superficie* superficie = new Superficie(100, 10, 50, "Images/terreno.bmp");
+	superficie->setMaterial(brass);
+	grObjects.push_back(superficie);
 }
 
 void Scene::ToggleCamLight() {

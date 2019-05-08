@@ -47,6 +47,9 @@ public:
 	void orbit(GLdouble incAng, GLdouble incY);
 	void changePrj();
 	void cenit();
+
+	glm::dvec3 const& getEye() const { return eye; }
+	glm::dvec3 const& getFront() const { return front; }
 protected:
 	
 	glm::dmat4 viewMat;    // view matrix = inverse of modeling matrix
