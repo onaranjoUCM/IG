@@ -420,9 +420,8 @@ void IndexMesh::render() {
   }
 }
 
-IndexMesh* IndexMesh::generateGrid(
-    GLdouble lado,
-    GLuint numDiv) {  // Grid cuadrado de lado*lado, centrado en el plano Y=0,
+IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint numDiv) {
+  // Grid cuadrado de lado*lado, centrado en el plano Y=0,
   // dividido en numDiv*numDiv celdas (cada celda son 2 triángulos)
   IndexMesh* m = new IndexMesh();
   GLdouble incr = lado / numDiv;  // incremento para la coordenada x, y la c. z
@@ -435,8 +434,8 @@ IndexMesh* IndexMesh::generateGrid(
 
   GLuint z = -lado / 2;
   GLuint x = -lado / 2;
-  for (int f = 0; f < m->numVertices; f++) {
-    for (int c = 0; c < m->numVertices; c++) {
+  for (int f = 0; f <= numDiv; f++) {
+    for (int c = 0; c <= numDiv; c++) {
       m->vertices[f * numFC + c] = dvec3(x + c * incr, 0, z + f * incr);
     }
   }
@@ -446,8 +445,8 @@ IndexMesh* IndexMesh::generateGrid(
   m->indices = new GLuint[m->numIndices];
 
   GLuint i = 0;  // array de índices
-  for (int h = 0; h < m->numIndices; h++) {
-    for (int k = 0; k < m->numIndices; k++) {
+  for (int h = 0; h < numDiv; h++) {
+    for (int k = 0; k < numDiv; k++) {
       GLuint iv = h * numFC + k;
       m->indices[i++] = iv;
       m->indices[i++] = iv + numFC;
@@ -482,10 +481,8 @@ IndexMesh* IndexMesh::generarPlanoCurvado(GLdouble lado, GLuint numDiv,
                                           GLdouble curvatura) {
   IndexMesh* m = generateGridTex(lado, numDiv);
 
-  m->normals = new dvec3[m->numVertices];
-
-  for (int f = 0; f < m->numVertices; f++) {
-    for (int c = 0; c < m->numVertices; c++) {
+  for (int f = 0; f <= numDiv; f++) {
+    for (int c = 0; c <= numDiv; c++) {
       GLuint x = m->vertices[f, c].x;
       GLuint z = m->vertices[f, c].z;
       m->vertices[f, c].y = lado * curvatura / 2 - curvatura / lado * (x * x) -
@@ -494,6 +491,7 @@ IndexMesh* IndexMesh::generarPlanoCurvado(GLdouble lado, GLuint numDiv,
           (2 * curvatura / lado * x, 1, 2 * curvatura / lado * z);
     }
   }
+  m->normals = new dvec3[m->numVertices];
   // modificar la coordenada Y de los vértices con la ecuación
   // f(x, z) = lado * curvatura / 2 – curvatura / lado * (x * x) – curvatura /
   // lado * (z * z) …  // para cada vértice del Grid V=(x,0,z), la coordenada Y
