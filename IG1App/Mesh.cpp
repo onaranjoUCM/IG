@@ -384,40 +384,44 @@ Mesh* Mesh::generaParedCuboTexCor(GLdouble w, GLdouble h) {
 }
 
 void IndexMesh::render() {
-  if (vertices != nullptr) {
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_DOUBLE, 0,
-                    vertices);  // number of coordinates per vertex, type of
-                                // each coordinate, stride, pointer
-    if (colors != nullptr) {
-      glEnableClientState(GL_COLOR_ARRAY);
-      glColorPointer(4, GL_DOUBLE, 0,
-                     colors);  // number of coordinates per color, type of each
-                               // coordinate, stride, pointer
-    }
+	if (vertices != nullptr) {
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_DOUBLE, 0,
+			vertices);  // number of coordinates per vertex, type of
+						// each coordinate, stride, pointer
+		if (colors != nullptr) {
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(4, GL_DOUBLE, 0,
+				colors);  // number of coordinates per color, type of each
+						  // coordinate, stride, pointer
+		}
 
-    if (textCoords != nullptr) {
-      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-      glTexCoordPointer(2, GL_DOUBLE, 0, textCoords);
-    }
+		if (textCoords != nullptr) {
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_DOUBLE, 0, textCoords);
+		}
 
-    if (normals != nullptr) {
-      glEnableClientState(GL_NORMAL_ARRAY);
-      glNormalPointer(GL_DOUBLE, 0, normals);
-    }
+		if (normals != nullptr) {
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glNormalPointer(GL_DOUBLE, 0, normals);
+		}
 
-    if (indices != nullptr) {
-      glEnableClientState(GL_INDEX_ARRAY);
-      glIndexPointer(GL_UNSIGNED_INT, 0, indices);
-    }
+		if (indices != nullptr) {
+			glEnableClientState(GL_INDEX_ARRAY);
+			glIndexPointer(GL_UNSIGNED_INT, 0, indices);
+		}
 
-    glDrawElements(primitive, numIndices, GL_UNSIGNED_INT, indices);
+		glDrawElements(primitive, numIndices, GL_UNSIGNED_INT, indices);
 
-    glDisableClientState(GL_INDEX_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_COLOR_ARRAY);
-  }
+		glDrawArrays(primitive, 0,
+			numVertices);  // primitive graphic, first index and number of
+						   // elements to be rendered
+
+		glDisableClientState(GL_NORMAL_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_INDEX_ARRAY);
+	}
 }
 
 IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint numDiv) {
@@ -432,10 +436,10 @@ IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint numDiv) {
   m->numVertices = numFC * numFC;  // número de vértices
   m->vertices = new dvec3[m->numVertices];
 
-  GLuint z = -lado / 2;
-  GLuint x = -lado / 2;
-  for (int f = 0; f <= numDiv; f++) {
-    for (int c = 0; c <= numDiv; c++) {
+  GLdouble z = -lado / 2;
+  GLdouble x = -lado / 2;
+  for (int f = 0; f < numFC; f++) {
+    for (int c = 0; c < numFC; c++) {
       m->vertices[f * numFC + c] = dvec3(x + c * incr, 0, z + f * incr);
     }
   }
@@ -469,8 +473,8 @@ IndexMesh* IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv) {
   m->textCoords = new dvec2[m->numVertices];
   GLuint s = 0;
   GLuint t = 1;
-  for (int f = 0; f < m->numVertices; f++) {
-    for (int c = 0; c < m->numVertices; c++) {
+  for (int f = 0; f < numFC; f++) {
+    for (int c = 0; c < numFC; c++) {
       m->textCoords[f * numFC + c] = dvec2(s + 0.25 * c, t - 0.25 * f);
     }
   }
@@ -481,23 +485,17 @@ IndexMesh* IndexMesh::generarPlanoCurvado(GLdouble lado, GLuint numDiv,
                                           GLdouble curvatura) {
   IndexMesh* m = generateGridTex(lado, numDiv);
 
-  for (int f = 0; f <= numDiv; f++) {
-    for (int c = 0; c <= numDiv; c++) {
+  m->normals = new dvec3[m->numVertices];
+  for (int f = 0; f <= numDiv + 1; f++) {
+    for (int c = 0; c <= numDiv + 1; c++) {
       GLuint x = m->vertices[f, c].x;
       GLuint z = m->vertices[f, c].z;
-      m->vertices[f, c].y = lado * curvatura / 2 - curvatura / lado * (x * x) -
-                            curvatura / lado * (z * z);
-      m->normals[f, c].y =
-          (2 * curvatura / lado * x, 1, 2 * curvatura / lado * z);
+      GLuint y = lado * curvatura / 2 - curvatura / lado * (x * x) -
+                 curvatura / lado * (z * z);
+      m->vertices[f, c] = {x, y, z};
+      m->normals[f, c] =
+          normalize(dvec3(2 * curvatura / lado * x, 1, 2 * curvatura / lado * z));
     }
   }
-  m->normals = new dvec3[m->numVertices];
-  // modificar la coordenada Y de los vértices con la ecuación
-  // f(x, z) = lado * curvatura / 2 – curvatura / lado * (x * x) – curvatura /
-  // lado * (z * z) …  // para cada vértice del Grid V=(x,0,z), la coordenada Y
-  // se cambia a f(x,z)
-  // generar el vector normal a cada vértice con la ecuación
-  // n(x, z) = (2 * curvatura / lado * x, 1, 2 * curvatura / lado * z)
-  //…  // el vector normal del vértice V=(x, y,z), es n(x, z) normalizado
   return m;
 }

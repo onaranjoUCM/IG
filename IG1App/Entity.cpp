@@ -394,13 +394,11 @@ Superficie::Superficie(GLdouble lado, GLuint numDiv, GLdouble curvatura, std::st
 Superficie::~Superficie() {}
 
 void Superficie::render(Camera const& cam) {
-	glEnable(GL_CULL_FACE);
 	material.upload();
 
+	texture->bind();
 	uploadMvM(cam.getViewMat());
 
-	texture->bind(GL_MODULATE);
+	mesh->render();
 	texture->unbind();
-
-	glDisable(GL_CULL_FACE);
 }
