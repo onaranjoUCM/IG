@@ -225,7 +225,7 @@ void Scene::escenaIlum() {
 	grObjects.push_back(lego);
 	legoLight = lego->getSpotLight();
 
-	Superficie* superficie = new Superficie(40, 4, 0.5, "Images/terreno.bmp");
+	Superficie* superficie = new Superficie(400, 40, 0.5, "Images/terreno.bmp");
 	superficie->setMaterial(brass);
 	grObjects.push_back(superficie);
 }

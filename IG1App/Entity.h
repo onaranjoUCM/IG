@@ -234,11 +234,16 @@ class Esfera : public EntityMaterial {
 
 class EsferaLuz : public Esfera {
   PosLight* spotLight;
+  Esfera* esferaGrande;
+  glm::dmat4 modelMatIni;
+  GLdouble ang = 0;
 
  public:
   EsferaLuz(GLdouble r, std::string t);
   ~EsferaLuz();
 
+  virtual void render(Camera const& cam);
+  virtual void update();
   PosLight* getSpotLight() { return spotLight; }
 };
 

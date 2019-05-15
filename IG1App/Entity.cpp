@@ -378,27 +378,66 @@ void Esfera::render(Camera const& cam) {
 //-------------------------------------------------------------------------
 
 EsferaLuz::EsferaLuz(GLdouble r, std::string t) : Esfera(r, t) {
+  modelMatIni = modelMat;
+
   spotLight = new PosLight();
   spotLight->uploadLI();
   spotLight->enable();
+
+  esferaGrande = new Esfera(r * 1.5, t);
+  glm::dmat4 m = esferaGrande->getModelMat();
+  m = translate(m, dvec3(0, 150, 100));
+  esferaGrande->setModelMat(m);
 }
 
 EsferaLuz::~EsferaLuz() { Esfera::~Esfera(); }
 
+void EsferaLuz::render(Camera const& cam) {
+  glEnable(GL_CULL_FACE);
+  material.upload();
+
+  gluQuadricDrawStyle(qObj, GLU_LINE);
+  gluQuadricNormals(qObj, GLU_SMOOTH);
+  gluQuadricOrientation(qObj, GLU_OUTSIDE);
+  gluQuadricTexture(qObj, GL_TRUE);
+  uploadMvM(cam.getViewMat());
+
+  texture->bind(GL_MODULATE);
+  gluSphere(qObj, radius, radius, radius);
+  texture->unbind();
+
+  glDisable(GL_CULL_FACE);
+  esferaGrande->render(cam);
+}
+
+void EsferaLuz::update() {
+  ang += 5;
+  if (ang >= 360) ang = 0;
+  setModelMat(modelMatIni);
+  glm::dmat4 m =
+      translate(getModelMat(), dvec3(200 * cos(radians(ang)),
+                         radius * 4 * sin(radians(ang)) * sin(radians(ang)),
+                         -200 * sin(radians(ang)) * cos(radians(ang))));
+  setModelMat(m);
+}
+
 //-------------------------------------------------------------------------
 
-Superficie::Superficie(GLdouble lado, GLuint numDiv, GLdouble curvatura, std::string t) : EntityMaterial(t) {
+Superficie::Superficie(GLdouble lado, GLuint numDiv, GLdouble curvatura,
+                       std::string t)
+    : EntityMaterial(t) {
   mesh = IndexMesh::generarPlanoCurvado(lado, numDiv, curvatura);
 }
 
 Superficie::~Superficie() {}
 
 void Superficie::render(Camera const& cam) {
-	material.upload();
+  material.upload();
 
-	texture->bind();
-	uploadMvM(cam.getViewMat());
+  texture->bind();
 
-	mesh->render();
-	texture->unbind();
+  uploadMvM(cam.getViewMat());
+
+  mesh->render();
+  texture->unbind();
 }

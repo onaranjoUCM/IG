@@ -492,7 +492,7 @@ IndexMesh* IndexMesh::generarPlanoCurvado(GLdouble lado, GLuint numDiv,
       GLuint z = m->vertices[f, c].z;
       GLuint y = lado * curvatura / 2 - curvatura / lado * (x * x) -
                  curvatura / lado * (z * z);
-      m->vertices[f, c] = {x, y, z};
+      m->vertices[f, c].y = y;
       m->normals[f, c] =
           normalize(dvec3(2 * curvatura / lado * x, 1, 2 * curvatura / lado * z));
     }
