@@ -418,6 +418,10 @@ void EsferaLuz::update() {
 	  translate(getModelMat(), dvec3(200 * cos(radians(ang)),
 		  radius * 4 * sin(radians(ang)) * sin(radians(ang)),
                          -200 * sin(radians(ang)) * cos(radians(ang))));
+  
+  spotLight->setPos(dvec3(200 * cos(radians(ang)),
+	  radius * 4 * sin(radians(ang)) * sin(radians(ang)),
+	  -200 * sin(radians(ang)) * cos(radians(ang))));
   setModelMat(m);
 }
 

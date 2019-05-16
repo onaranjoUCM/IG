@@ -226,7 +226,7 @@ void Scene::escenaIlum() {
 	legoLight = lego->getSpotLight();
 
 	Superficie* superficie = new Superficie(400, 20, 0.5, "Images/terreno.bmp");
-	superficie->setMaterial(gold);
+	superficie->setMaterial(brass);
 	m = superficie->getModelMat();
 	m = translate(m, dvec3(0, -100, 0));
 	superficie->setModelMat(m);
