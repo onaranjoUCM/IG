@@ -213,7 +213,7 @@ void Scene::escenaIlum() {
 	brass.setBrass();
 	jupiter->setMaterial(brass);
 	m = jupiter->getModelMat();
-	m = translate(m, dvec3(0, -200, 200));
+	m = translate(m, dvec3(0, -250, 200));
 	jupiter->setModelMat(m);
 	grObjects.push_back(jupiter);
 
@@ -225,8 +225,11 @@ void Scene::escenaIlum() {
 	grObjects.push_back(lego);
 	legoLight = lego->getSpotLight();
 
-	Superficie* superficie = new Superficie(400, 40, 0.5, "Images/terreno.bmp");
-	superficie->setMaterial(brass);
+	Superficie* superficie = new Superficie(400, 20, 0.5, "Images/terreno.bmp");
+	superficie->setMaterial(gold);
+	m = superficie->getModelMat();
+	m = translate(m, dvec3(0, -100, 0));
+	superficie->setModelMat(m);
 	grObjects.push_back(superficie);
 }
 

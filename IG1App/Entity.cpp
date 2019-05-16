@@ -415,8 +415,8 @@ void EsferaLuz::update() {
   if (ang >= 360) ang = 0;
   setModelMat(modelMatIni);
   glm::dmat4 m =
-      translate(getModelMat(), dvec3(200 * cos(radians(ang)),
-                         radius * 4 * sin(radians(ang)) * sin(radians(ang)),
+	  translate(getModelMat(), dvec3(200 * cos(radians(ang)),
+		  radius * 4 * sin(radians(ang)) * sin(radians(ang)),
                          -200 * sin(radians(ang)) * cos(radians(ang))));
   setModelMat(m);
 }
@@ -434,7 +434,7 @@ Superficie::~Superficie() {}
 void Superficie::render(Camera const& cam) {
   material.upload();
 
-  texture->bind();
+  texture->bind(GL_MODULATE);
 
   uploadMvM(cam.getViewMat());
 

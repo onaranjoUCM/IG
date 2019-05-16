@@ -475,7 +475,7 @@ IndexMesh* IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv) {
   GLuint t = 1;
   for (int f = 0; f < numFC; f++) {
     for (int c = 0; c < numFC; c++) {
-      m->textCoords[f * numFC + c] = dvec2(s + 0.25 * c, t - 0.25 * f);
+      m->textCoords[f * numFC + c] = dvec2(s + 0.05 * c, t - 0.05 * f);
     }
   }
   return m;
@@ -486,16 +486,14 @@ IndexMesh* IndexMesh::generarPlanoCurvado(GLdouble lado, GLuint numDiv,
   IndexMesh* m = generateGridTex(lado, numDiv);
 
   m->normals = new dvec3[m->numVertices];
-  for (int f = 0; f <= numDiv + 1; f++) {
-    for (int c = 0; c <= numDiv + 1; c++) {
-      GLuint x = m->vertices[f, c].x;
-      GLuint z = m->vertices[f, c].z;
+  for (int i = 0; i < m->numVertices; i++) {
+      GLuint x = m->vertices[i].x;
+      GLuint z = m->vertices[i].z;
       GLuint y = lado * curvatura / 2 - curvatura / lado * (x * x) -
                  curvatura / lado * (z * z);
-      m->vertices[f, c].y = y;
-      m->normals[f, c] =
+      m->vertices[i].y = y;
+      m->normals[i] =
           normalize(dvec3(2 * curvatura / lado * x, 1, 2 * curvatura / lado * z));
     }
-  }
   return m;
 }
