@@ -244,7 +244,7 @@ class EsferaLuz : public Esfera {
 
   virtual void render(Camera const& cam);
   virtual void update();
-  PosLight* getSpotLight() { return spotLight; }
+  SpotLight* getSpotLight() { return spotLight; }
 };
 
 //-------------------------------------------------------------------------

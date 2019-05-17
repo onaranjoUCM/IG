@@ -402,6 +402,7 @@ void EsferaLuz::render(Camera const& cam) {
   gluQuadricTexture(qObj, GL_TRUE);
   uploadMvM(cam.getViewMat());
 
+  spotLight->upload(cam.getViewMat()*getModelMat());
   texture->bind(GL_MODULATE);
   gluSphere(qObj, radius, radius, radius);
   texture->unbind();
