@@ -233,7 +233,7 @@ class Esfera : public EntityMaterial {
 //-------------------------------------------------------------------------
 
 class EsferaLuz : public Esfera {
-  PosLight* spotLight;
+  SpotLight* spotLight;
   Esfera* esferaGrande;
   glm::dmat4 modelMatIni;
   GLdouble ang = 0;

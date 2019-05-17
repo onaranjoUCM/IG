@@ -380,13 +380,13 @@ void Esfera::render(Camera const& cam) {
 EsferaLuz::EsferaLuz(GLdouble r, std::string t) : Esfera(r, t) {
   modelMatIni = modelMat;
 
-  spotLight = new PosLight();
+  spotLight = new SpotLight();
   spotLight->uploadLI();
   spotLight->enable();
 
   esferaGrande = new Esfera(r * 1.5, t);
   glm::dmat4 m = esferaGrande->getModelMat();
-  m = translate(m, dvec3(0, 150, 100));
+  m = translate(m, dvec3(0, 125, 0));
   esferaGrande->setModelMat(m);
 }
 
@@ -418,11 +418,16 @@ void EsferaLuz::update() {
 	  translate(getModelMat(), dvec3(200 * cos(radians(ang)),
 		  radius * 4 * sin(radians(ang)) * sin(radians(ang)),
                          -200 * sin(radians(ang)) * cos(radians(ang))));
+  setModelMat(m);
+  
+  m = translate(getModelMat(), dvec3(50 * cos(radians(ang)),
+	  radius * 1 * sin(radians(ang)) * sin(radians(ang)),
+	  -50 * sin(radians(ang)) * cos(radians(ang))));
+  esferaGrande->setModelMat(m);
   
   spotLight->setPos(dvec3(200 * cos(radians(ang)),
 	  radius * 4 * sin(radians(ang)) * sin(radians(ang)),
 	  -200 * sin(radians(ang)) * cos(radians(ang))));
-  setModelMat(m);
 }
 
 //-------------------------------------------------------------------------
