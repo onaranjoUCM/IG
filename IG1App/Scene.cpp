@@ -57,7 +57,7 @@ void Scene::render(Camera const& cam)
 	camLight->setDir(cam.getFront());
 	camLight->upload(cam.getViewMat());
 
-	legoLight->upload(cam.getViewMat());
+	//legoLight->upload(cam.getViewMat());
 	for (Entity* el: grObjects) {
 		el->render(cam);
 	}
